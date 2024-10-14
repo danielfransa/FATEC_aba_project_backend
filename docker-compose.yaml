@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - backend-network
+    environment:
+      - SPRING_APPLICATION_NAME=api
+      - SPRING_DATASOURCE_URL=${SUPABASEDATASOURCE}
+      - SPRING_DATASOURCE_USERNAME=${SUPABASEUSER}
+      - SPRING_DATASOURCE_PASSWORD=${SUPABASEPASSWORD}
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=10
+      - SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT=30000
+      - SPRING_DATASOURCE_HIKARI_MAX_LIFETIME=1800000
+      - SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT=20000
+      - SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE=2
+    expose:
+      - "8080"
+
+networks:
+  backend-network:
+    driver: bridge
